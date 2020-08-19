@@ -1,6 +1,7 @@
-package com.example.test;
+package com.example.WeatherReport;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -27,13 +28,15 @@ public class Cities extends AppCompatActivity implements View.OnClickListener {
 
 
         // HARDCODE:
-        reports.add(new Weather ("Moscow", "24℃", R.drawable.foggy));
-        reports.add(new Weather ("Saint Petersburg", "14℃", R.drawable.rain));
-        reports.add(new Weather ("Ryazan", "30℃", R.drawable.sunny));
-        reports.add(new Weather ("Balashikha", "-7°C", R.drawable.storm));
+        reports.add(new Weather ("Moscow · foggy", "24℃", R.drawable.foggy));
+        reports.add(new Weather ("Saint Petersburg · rain", "14℃", R.drawable.rain));
+        reports.add(new Weather ("Ryazan · sunny", "30℃", R.drawable.sunny));
+        reports.add(new Weather ("Balashikha · storm", "-7°C", R.drawable.storm));
 
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
+        //recyclerView.addItemDecoration(new DividerItemDecoration(Cities.this,
+        //        DividerItemDecoration.VERTICAL));
         DataAdapter adapter = new DataAdapter(this, reports);
         recyclerView.setAdapter(adapter);
     }
