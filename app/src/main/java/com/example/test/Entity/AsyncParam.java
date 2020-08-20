@@ -6,12 +6,16 @@ public class AsyncParam<T> {
 
     private T obj;
     private Context context;
-    private boolean flag;
+    private boolean boolParam;
+    private int intParam;
+    private String strParam;
 
-    public AsyncParam(Context _context, T _obj, boolean _flag) {
+    public AsyncParam(Context _context, T _obj, boolean _boolParam, int _intParam, String _strParam) {
         context = _context;
         obj = _obj;
-        flag = _flag;
+        boolParam = _boolParam;
+        intParam = _intParam;
+        strParam = _strParam;
     }
 
     public Context getContext() {
@@ -22,7 +26,13 @@ public class AsyncParam<T> {
         return obj;
     }
 
-    public boolean getFlag() {
-        return flag;
+    public boolean getBoolParam() {
+        return boolParam;
+    }
+    public int getIntParam() {
+        return intParam;
+    }
+    public String getStrParam() {
+        return strParam;
     }
 }

@@ -2,7 +2,6 @@ package com.example.test;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.test.Entity.AsyncParam;
 import com.example.test.Entity.AsyncRet;
@@ -94,43 +93,41 @@ public class AsyncHelper {
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------
-    @SuppressWarnings("unchecked")
-    public static class GetCities extends AsyncTask<AsyncParam, Void, AsyncRet> {
-        OnTaskCompleteListener mCallBack;
+    public static class GetCities extends AsyncTask<AsyncParam<AsyncHelper>, Void, AsyncRet<List<City>>> {
+        OnTaskCompleteListener<AsyncRet<List<City>>> mCallBack;
         boolean isError = false;
         String message = "";
 
-        GetCities(OnTaskCompleteListener callback) {
+        GetCities(OnTaskCompleteListener<AsyncRet<List<City>>> callback) {
             mCallBack = callback;
         }
 
         @Override
-        protected final AsyncRet doInBackground(AsyncParam... params) {
+        protected final AsyncRet<List<City>> doInBackground(AsyncParam... params) {
             AsyncHelper ah = (AsyncHelper) params[0].getObject();
+            String searchCity = params[0].getStrParam();
+
+            List<City> citiesList = null;
             try {
-                Response response = ah.getWebService().getCities(Utils.SRV_VER, "Москва", Utils.SRV_KEY, Utils.getLanguage(ah.context)).execute();
+                Response<List<City>> response = ah.getWebService().getCities(Utils.SRV_VER, searchCity, Utils.SRV_KEY, Utils.getLanguage(ah.context)).execute();
                 if (response.isSuccessful() && response.body() != null) {
-                    List<City> citiesList = (List<City>) response.body();
-                    Log.d("### CITY ###", response.message());
-                    //Add to DB...
+                    citiesList = response.body();
                 } else if (!response.isSuccessful()) {
                     isError = true;
                     message = response.message();
-                    Log.d("### CITY ###", response.message());
                 }
 
-                return new AsyncRet(isError, response.code(), message, null);
+                return new AsyncRet<>(isError, response.code(), message, citiesList);
 
             } catch (Exception ex) {
                 isError = true;
                 message = ex.getMessage();
-                Log.d("### CITY ###", ex.getMessage());
-                return new AsyncRet(isError, 0, message, null);
+                return new AsyncRet<>(isError, 0, message, citiesList);
             }
         }
 
         @Override
-        protected void onPostExecute(AsyncRet result) {
+        protected void onPostExecute(AsyncRet<List<City>> result) {
             super.onPostExecute(result);
             mCallBack.onTaskComplete(result);
         }
