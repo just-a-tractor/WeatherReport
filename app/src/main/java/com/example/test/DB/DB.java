@@ -5,21 +5,21 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 
+import com.example.test.DB.DAO.CityDAO;
+import com.example.test.DB.Models.CityModel;
 import com.example.test.Utils.Utils;
 
 
-//@Database(entities = {
-//        Model.class,
-//        Model.class
-//}, version = 1, exportSchema = false)
+@Database(entities = {
+        CityModel.class
+}, version = 1, exportSchema = false)
 
 //@TypeConverters({DateConverter.class})
-public abstract class DB extends RoomDatabase {
-    //public abstract DAO Dao();
 
-    //public abstract Dao Dao();
+public abstract class DB extends RoomDatabase {
+
+    public abstract CityDAO cityDAO();
 
     private static DB INSTANCE;
 

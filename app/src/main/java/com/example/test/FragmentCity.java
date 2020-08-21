@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test.Adapters.AppSearchCityAdapter;
 import com.example.test.Adapters.RecyclerCityItemOnClickListener;
+import com.example.test.DB.Models.CityModel;
+import com.example.test.Entity.AsyncCityParam;
 import com.example.test.Entity.AsyncParam;
 import com.example.test.Entity.AsyncRet;
 import com.example.test.Entity.Cities.City;
@@ -74,8 +76,19 @@ public class FragmentCity extends Fragment {
         rvCities.addOnItemTouchListener(new RecyclerCityItemOnClickListener(getActivity(), new RecyclerCityItemOnClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, City objItem, int position) {
-                        Log.d("A", "B");
-                        //TODO Add to DB -->>
+                        CityModel cityModel = new CityModel();
+                        cityModel.setCityKey(objItem.Key);
+                        cityModel.setCityArea(String.format("%s-%s", objItem.AdministrativeArea.LocalizedType, objItem.AdministrativeArea.LocalizedName));
+                        cityModel.setCityRegion(String.format("%s/%s", objItem.Region.LocalizedName, objItem.Country.LocalizedName));
+
+                        AsyncCityParam cp = new AsyncCityParam(activity, cityModel, activity.getAsyncHelper().getDatabase(), false);
+                        new AsyncHelper.AddCityModel(new AsyncHelper.OnTaskBooleanCompleteListener<Boolean>() {
+                            @Override
+                            public void onTaskComplete(boolean result) {
+                                if(result)
+                                    activity.getSupportFragmentManager().popBackStack();
+                            }
+                        }).execute(cp);
                     }
                 })
         );

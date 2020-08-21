@@ -3,6 +3,9 @@ package com.example.test;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.test.DB.DB;
+import com.example.test.DB.Models.CityModel;
+import com.example.test.Entity.AsyncCityParam;
 import com.example.test.Entity.AsyncParam;
 import com.example.test.Entity.AsyncRet;
 import com.example.test.Entity.Cities.City;
@@ -23,19 +26,24 @@ public class AsyncHelper {
 
     private Context context;
     private Utils utils;
+    private DB database;
     private WebApi service;
     protected Gson gson;
-
 
     public AsyncHelper(Context _context) {
         context = _context;
         gson = new Gson();
+        database = DB.getInstance(_context);
         utils = new Utils();
         CreateWebService();
     }
 
     public Context getContext() {
         return context;
+    }
+
+    public DB getDatabase() {
+        return database;
     }
 
     public WebApi getWebService() {
@@ -132,4 +140,32 @@ public class AsyncHelper {
             mCallBack.onTaskComplete(result);
         }
     }
+
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    public static class AddCityModel extends AsyncTask<AsyncCityParam, Void, Boolean> {
+        OnTaskBooleanCompleteListener<Boolean> mCallBack;
+
+        AddCityModel(OnTaskBooleanCompleteListener<Boolean> callback) {
+            mCallBack = callback;
+        }
+
+        @Override
+        protected Boolean doInBackground(AsyncCityParam... params) {
+            Long cityId;
+            try {
+                cityId = params[0].getDb().cityDAO().insert(params[0].getCityModel());
+
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            mCallBack.onTaskComplete(result);
+        }
+    }
+
 }
