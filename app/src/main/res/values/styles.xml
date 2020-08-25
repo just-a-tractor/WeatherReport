@@ -14,4 +14,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppFlatButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/app_orange</item>
+        <item name="colorControlNormal">@color/app_orange</item>
+        <item name="colorControlActivated">@color/app_orange</item>
+        <item name="android:textColor">@color/app_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
