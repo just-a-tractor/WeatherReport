@@ -1,6 +1,7 @@
 package com.example.test;
 
 import com.example.test.Entity.Cities.City;
+import com.example.test.Entity.CurrentConditions.CurrentConditions;
 
 import java.util.List;
 
@@ -12,4 +13,7 @@ import retrofit2.http.Query;
 public interface WebApi {
     @GET("/locations/{version}/search")
     Call<List<City>> getCities(@Path("version") String version, @Query("q") String city, @Query("apikey") String apiKey, @Query("language") String language);
+
+    @GET("/currentconditions/{version}/{cityKey}")
+    Call<List<CurrentConditions>> getCurrentConditions(@Path("version") String version, @Path("cityKey") String cityKey, @Query("apikey") String apiKey, @Query("language") String language, @Query("details") boolean details);
 }
