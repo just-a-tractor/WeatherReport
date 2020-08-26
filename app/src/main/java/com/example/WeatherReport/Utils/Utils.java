@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class Utils {
-    public static String SRV_URL = "http://api.accuweather.com";
+    public static String SRV_URL = "https://api.accuweather.com";
     public static String SRV_VER = "v1";
     public static String SRV_KEY = "296894b065a2471290a6750ff2dbd619"; //Lenovo ApiKey :)
+    public static boolean DETAILS = true;
     public static String DB_NAME_KEY = "report_weather.db";
     public static String getLanguage(Context context) {
 

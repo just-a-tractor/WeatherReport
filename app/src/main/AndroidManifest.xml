@@ -16,7 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:name="com.example.WeatherReport.AppActivity">
@@ -26,7 +25,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
-
 </manifest>

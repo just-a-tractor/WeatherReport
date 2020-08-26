@@ -9,6 +9,7 @@ import com.example.WeatherReport.Entity.AsyncCityParam;
 import com.example.WeatherReport.Entity.AsyncParam;
 import com.example.WeatherReport.Entity.AsyncRet;
 import com.example.WeatherReport.Entity.Cities.City;
+import com.example.WeatherReport.Entity.CurrentConditions.CurrentConditions;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -140,6 +141,47 @@ public class AsyncHelper {
             mCallBack.onTaskComplete(result);
         }
     }
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    public static class GetWeather extends AsyncTask<AsyncParam<AsyncHelper>, Void, AsyncRet<List<CurrentConditions>>> {
+        OnTaskCompleteListener<AsyncRet<List<CurrentConditions>>> mCallBack;
+        boolean isError = false;
+        String message = "";
+
+        GetWeather(OnTaskCompleteListener<AsyncRet<List<CurrentConditions>>> callback) {
+            mCallBack = callback;
+        }
+
+        @Override
+        protected final AsyncRet<List<CurrentConditions>> doInBackground(AsyncParam... params) {
+            AsyncHelper ah = (AsyncHelper) params[0].getObject();
+            String cityKey = params[0].getStrParam();
+
+            List<CurrentConditions> currentConditions = null;
+            try {
+                Response<List<CurrentConditions>> response = ah.getWebService().getCurrentConditions(Utils.SRV_VER, cityKey, Utils.SRV_KEY, Utils.getLanguage(ah.context), Utils.DETAILS).execute();
+                if (response.isSuccessful() && response.body() != null) {
+                    currentConditions = response.body();
+                } else if (!response.isSuccessful()) {
+                    isError = true;
+                    message = response.message();
+                }
+
+                return new AsyncRet<>(isError, response.code(), message, currentConditions);
+
+            } catch (Exception ex) {
+                isError = true;
+                message = ex.getMessage();
+                return new AsyncRet<>(isError, 0, message, currentConditions);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(AsyncRet<List<CurrentConditions>> result) {
+            super.onPostExecute(result);
+            mCallBack.onTaskComplete(result);
+        }
+    }
+
 
     //--------------------------------------------------------------------------------------------------------------------------------------------
     public static class AddCityModel extends AsyncTask<AsyncCityParam, Void, Boolean> {

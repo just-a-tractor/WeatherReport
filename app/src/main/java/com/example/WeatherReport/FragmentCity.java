@@ -47,6 +47,7 @@ public class FragmentCity extends Fragment {
 
         progressBar = rootView.findViewById(R.id.progressBar);
 
+
         editText = rootView.findViewById(R.id.editText);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -77,6 +78,7 @@ public class FragmentCity extends Fragment {
         rvCities.addOnItemTouchListener(new RecyclerCityItemOnClickListener(getActivity(), new RecyclerCityItemOnClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, City objItem, int position) {
+
                         CityModel cityModel = new CityModel();
                         cityModel.setCityKey(objItem.Key);
                         cityModel.setCityArea(String.format("%s-%s", objItem.AdministrativeArea.LocalizedType, objItem.AdministrativeArea.LocalizedName));
@@ -119,6 +121,7 @@ public class FragmentCity extends Fragment {
         });
 
         progressBar.setVisibility(View.VISIBLE);
+
         getCityList.execute(ap);
     }
 }

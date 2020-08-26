@@ -44,4 +44,13 @@ public class CityModel {
     public void setCityRegion(String _Region) {
         this.cityRegion = _Region;
     }
+
+    @Override
+    public String toString() {
+        return "CityModel{" +
+                "cityKey='" + cityKey + '\'' +
+                ", cityArea='" + cityArea + '\'' +
+                ", cityRegion='" + cityRegion + '\'' +
+                '}';
+    }
 }

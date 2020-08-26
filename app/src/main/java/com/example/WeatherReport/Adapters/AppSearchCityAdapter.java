@@ -39,6 +39,7 @@ public class AppSearchCityAdapter extends RecyclerView.Adapter<AppSearchCityAdap
         holder.cityView.setText(city.LocalizedName);
         holder.areaView.setText(String.format("%s-%s", city.AdministrativeArea.LocalizedType, city.AdministrativeArea.LocalizedName));
         holder.regionView.setText(String.format("%s/%s", city.Region.LocalizedName, city.Country.LocalizedName));
+        holder.rankView.setText(String.valueOf(city.Rank));
     }
 
     @Override
@@ -51,13 +52,14 @@ public class AppSearchCityAdapter extends RecyclerView.Adapter<AppSearchCityAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView cityView, regionView, areaView;
+        final TextView cityView, regionView, areaView, rankView;
 
         ViewHolder(View view) {
             super(view);
             regionView = view.findViewById(R.id.CityRegionInfoText);
             cityView = view.findViewById(R.id.CityInfoText);
             areaView = view.findViewById(R.id.CityAreaInfoText);
+            rankView = view.findViewById(R.id.CityRankText);
         }
     }
 }
